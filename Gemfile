@@ -14,6 +14,9 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
+# Use ProtectedAttributes to keep attr_accessible method
+gem 'protected_attributes'
+
 # Use Haml for templates
 gem 'haml'
 
