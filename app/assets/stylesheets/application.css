@@ -9,6 +9,11 @@ html, body {
   font-size: 10pt;
 }
 
+.message {
+  color: red;
+  text-align: center;
+}
+
 div#main {
   margin: 0;
   padding: 0 20px 20px;
