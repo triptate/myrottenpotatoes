@@ -71,6 +71,10 @@ table#movies th {
   background-color: wheat;
 }
 
+table#movies tr:hover {
+  background-color: yellow;
+}
+
 table#movies th, table#movies td {
   padding: 4px;
   text-align: left;
