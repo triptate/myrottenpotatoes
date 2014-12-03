@@ -9,6 +9,19 @@ html, body {
   font-size: 10pt;
 }
 
+div#nav {
+  background-color: LightGray;
+  text-align: center;
+  padding: 5px 0px;
+}
+
+span#logo {
+  color: red;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 150%;
+}
+
 .message {
   color: red;
   text-align: center;
