@@ -5,7 +5,7 @@ class Moviegoer < ActiveRecord::Base
   def self.create_with_omniauth(auth)
   	Movigoer.create!(
   		:provider => auth["provider"],
-  		:uid => auth["uid"]
+  		:uid => auth["uid"],
   		:name => auth["info"]["name"])
   end
 

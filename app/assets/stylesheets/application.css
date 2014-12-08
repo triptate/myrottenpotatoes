@@ -10,16 +10,23 @@ html, body {
 }
 
 div#nav {
-  background-color: LightGray;
-  text-align: center;
+  background-color: orange;
+  text-align: left;
   padding: 5px 0px;
+  border-bottom: thick solid yellow;
 }
 
 span#logo {
-  color: red;
+  color: white;
   display: inline-block;
+  float: left;
   font-weight: bold;
   font-size: 150%;
+}
+
+#login {
+  display: inline-block;
+  float: right;
 }
 
 .message {
