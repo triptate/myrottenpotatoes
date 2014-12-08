@@ -20,6 +20,10 @@ gem 'protected_attributes'
 # Use Haml for templates
 gem 'haml'
 
+# Use omniauth to authenticate users
+gem 'omniauth'
+gem 'omniauth-twitter'
+
 # Use byebug debugger
 group :development, :test do
   gem 'byebug'
