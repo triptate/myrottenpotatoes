@@ -23,7 +23,7 @@ span#logo {
   padding: 0px 5px;
 }
 
-#login {
+#login, .welcome {
   display: inline-block;
   padding: 0px 5px;
 }
