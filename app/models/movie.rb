@@ -1,5 +1,7 @@
 class Movie < ActiveRecord::Base
 
+  has_many :reviews
+
   def self.all_ratings; %w[G M PG PG-13 R NC-17 X]; end # shortcut for an array of strings
 
   validates :title, :presence => true
