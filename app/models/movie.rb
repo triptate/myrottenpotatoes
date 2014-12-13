@@ -23,6 +23,18 @@ class Movie < ActiveRecord::Base
   	release_date && release_date < @@grandfathered_date
   end
 
+  scope :with_good_reviews, lambda { |threshold|
+    Movie.joins(:reviews).group(:movie_id).having(['AVG(reviews.potatoes) > ?', threshold.to_i])
+  }
+
+  scope :for_kids, lambda {
+    Movie.where('rating in (?)', %w(G PG))
+  }
+
+  scope :recently_reviewed, lambda { |n|
+    Movie.joins(:reviews).where(['reviews.created_at >= ?', n.days.ago]).uniq
+  }
+
   attr_accessible :title, :rating, :description, :release_date
 
 end

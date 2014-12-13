@@ -6,6 +6,13 @@ class MoviesController < ApplicationController
     @movies = Movie.order(:title)
   end
 
+  def movies_with_filters
+    @movies = Movie.with_good_reviews(params[:threshold])
+    %w(for_kids with_many_fans recently_reviewed).each do |filter|
+      @movies = @movies.send(filter) if params[filter]
+    end
+  end
+
   def show
     id = params[:id] # retrieve movie ID from URI route
     begin
