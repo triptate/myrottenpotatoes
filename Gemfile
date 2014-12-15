@@ -3,8 +3,6 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -24,9 +22,15 @@ gem 'haml'
 gem 'omniauth'
 gem 'omniauth-twitter'
 
-# Use byebug debugger
+# On development & test, use the byebug debugger and sqlite3 database
 group :development, :test do
   gem 'byebug'
+  gem 'sqlite3'
+end
+
+# On production, use the postgresql database
+group :production do
+  gem 'pg'
 end
 
 # Use jquery as the JavaScript library
@@ -49,7 +53,3 @@ gem 'spring',        group: :development
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
