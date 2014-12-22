@@ -1,4 +1,4 @@
-class CreateReviews < ActiveRecord::Migration
+dclass CreateReviews < ActiveRecord::Migration
 
   def up
   	create_table 'reviews' do |t|

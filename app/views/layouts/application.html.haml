@@ -9,7 +9,7 @@
   %body
     %div#nav
       %span#logo Rotten Potatoes!
-      = render :partial => 'login_form'
+      = render :partial => 'layouts/login_form'
     - if flash[:notice]
       #notice.message= flash[:notice]
     - elsif flash[:warning]
