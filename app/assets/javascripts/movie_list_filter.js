@@ -17,6 +17,6 @@ var MovieListFilter = {
     $('#filter').change(MovieListFilter.filter_adult);
   }
 
-}
+};
 
 $(MovieListFilter.setup); // run setup function when document ready
