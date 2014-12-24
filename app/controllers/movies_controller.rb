@@ -4,9 +4,24 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings  # just to make data accessible to view
-    @rating_filter = params[:ratings] ? params[:ratings].keys : @all_ratings
-    @sort_by = params[:sort_by] ? params[:sort_by].to_sym : :title
-    @movies = Movie.where(rating: @rating_filter).order(@sort_by)
+
+    # if a new filter is added, use it and update the session; otherwise, use the session or the default
+    if params[:filter]
+      @filter = params[:filter].keys
+      session[:filter] = params[:filter]
+    else
+      @filter = session[:filter] ? session[:filter].keys : @all_ratings      
+    end
+
+    # if a new sort is added, use it and update the session; otherwise, use the session or the default
+    if params[:sort]
+      @sort = session[:sort] = params[:sort]
+    else
+      @sort = session[:sort] ? session[:sort] : :title
+    end
+
+    @sort = @sort.to_sym  # params and session will convert the sort to a string, causing CSS issues
+    @movies = Movie.where(rating: @filter).order(@sort)
   end
 
   def movies_with_filters
