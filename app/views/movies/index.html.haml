@@ -21,6 +21,6 @@
       %th Edit
       %th Delete
   %tbody
-    = render :partial => 'movie', :collection => @movies
+    = render :partial => 'movie_row', :collection => @movies
 
 = link_to 'Add new movie', new_movie_path

@@ -1,0 +1,8 @@
+%tr{:class => ('adult' unless movie_row.rating =~ /^G|PG$/)}
+  %td= movie_row.id
+  %td= movie_row.title
+  %td= movie_row.rating
+  %td= movie_row.release_date
+  %td= link_to "More about #{movie_row.title}", movie_path(movie_row), :class => 'trigger_popup'
+  %td= link_to 'Edit info', edit_movie_path(movie_row)
+  %td= link_to 'Delete', movie_path(movie_row), :method => :delete
