@@ -33,6 +33,15 @@ group :production do
   gem 'pg'
 end
 
+# On test, use Cucumber and Capybara and related tools
+group :test do
+  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails-training-wheels'  # some pre-fabbed step definitions
+  gem 'database_cleaner'  # to clear Cucumber's test database between runs
+  gem 'capybara'  # lets Cucumber pretend to be a web browser
+  gem 'launchy'  # a useful debugging aid for user stories
+end
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
