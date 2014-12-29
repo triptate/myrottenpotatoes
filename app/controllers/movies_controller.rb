@@ -6,6 +6,7 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings  # just to make data accessible to view
     all_ratings_hash = Hash[@all_ratings.map {|rating| [rating, rating]}]
     needs_redirect = false
+
     # if a new filter is added, use it and update the session; otherwise, use the session or the default
     if params[:filter]
       @filter = session[:filter] = params[:filter]
@@ -13,6 +14,7 @@ class MoviesController < ApplicationController
       @filter = session[:filter] ? session[:filter] : all_ratings_hash
       needs_redirect = true
     end
+
     # if a new sort is added, use it and update the session; otherwise, use the session or the default
     if params[:sort]
       @sort = session[:sort] = params[:sort]
@@ -20,6 +22,7 @@ class MoviesController < ApplicationController
       @sort = session[:sort] ? session[:sort] : :title
       needs_redirect = true
     end
+
     @sort = @sort.to_sym  # params and session will convert the sort to a string, causing CSS issues
     flash.keep
     redirect_to movies_path({:filter => @filter, :sort => @sort}) if needs_redirect
@@ -31,6 +34,11 @@ class MoviesController < ApplicationController
     %w(for_kids with_many_fans recently_reviewed).each do |filter|
       @movies = @movies.send(filter) if params[filter]
     end
+  end
+
+  def search_tmdb
+    flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
+    redirect_to movies_path
   end
 
   def show
