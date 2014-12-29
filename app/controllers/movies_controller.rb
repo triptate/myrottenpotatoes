@@ -53,7 +53,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new(params[:movie])
     if @movie.save
       flash[:notice] = "#{@movie.title} was successfully created."
-      redirect_to movie_path(@movie)
+      redirect_to movies_path
     else
       render 'new' # note, 'new' template can access @movie's field values
     end
