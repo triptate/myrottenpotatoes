@@ -2,14 +2,12 @@
 
 Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
-    # each returned element will be a hash whose key is the table header.
-    # you should arrange to add that movie to the database here.
+    Movie.new(movie).save
   end
-  flunk "Unimplemented"
 end
 
 # Make sure that one string (regexp) occurs before or after another one
-#   on the same page
+# on the same page
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
@@ -22,12 +20,40 @@ end
 #  "When I check the following ratings: G"
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
-  # HINT: use String#split to split up the rating_list, then
-  #   iterate over the ratings and reuse the "When I check..." or
-  #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  flunk "Unimplemented"
+  convert_to_array(rating_list).each do |rating|
+    steps %Q{
+      When I #{uncheck}check "filter[#{rating}]"
+    }
+  end
 end
 
+# Make it easier to assert that movies with certain ratings appear on the page
+#  "I should see movies rated: G, R"
+#  "I should not see movies rated: PG, PG-13, NC-17"
+
+Then /I should (not )?see movies rated: (.*)/ do |negative_assertion, rating_list|
+  Movie.where(:rating => convert_to_array(rating_list)).each do |movie|
+    if negative_assertion
+      page.find('#movies tbody').assert_no_text(movie.title)
+    else
+      page.find('#movies tbody').assert_text(movie.title)
+    end
+  end
+end
+
+# In the special case that you're searching all the movies, we can simply check
+# that there are the same number of rows in the movies table on the page as there
+# are rows in the movies database.
+
 Then /I should see all the movies/ do
-  # Make sure that all the movies in the app are visible in the table
-  flunk "Unimplemented"
+  assert all('#movies tbody tr').count == Movie.all.count
+end
+
+# helper methods below
+
+def convert_to_array(rating_list)
+  ratings = []
+  rating_list.split(%r{,\s*}).each do |rating|
+    ratings << rating
+  end
+end
