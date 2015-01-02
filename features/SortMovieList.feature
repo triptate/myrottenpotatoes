@@ -14,7 +14,6 @@ Background: movies have been added to database
   | The Help                | PG-13  | 10-Aug-2011  |
   | Chocolat                | PG-13  | 5-Jan-2001   |
   | Amelie                  | R      | 25-Apr-2001  |
-  | 2001: A Space Odyssey   | G      | 6-Apr-1968   |
   | The Incredibles         | PG     | 5-Nov-2004   |
   | Raiders of the Lost Ark | PG     | 12-Jun-1981  |
   | Chicken Run             | G      | 21-Jun-2000  |
@@ -23,8 +22,10 @@ Background: movies have been added to database
 
 Scenario: sort movies alphabetically
   When I follow "Movie Title"
-  # your steps here
+  Then I should see "Aladdin" before "Amelie"
+  And  I should see "Chicken Run" before "The Terminator"
 
 Scenario: sort movies in increasing order of release date
   When I follow "Release Date"
-  # your steps here
+  Then I should see "Raiders of the Lost Ark" before "When Harry Met Sally"
+  And  I should see "The Incredibles" before "The Help"
