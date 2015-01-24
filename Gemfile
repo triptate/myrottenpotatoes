@@ -22,6 +22,9 @@ gem 'haml'
 gem 'omniauth'
 gem 'omniauth-twitter'
 
+# Use themoviedb for movie data search
+gem 'themoviedb'
+
 # On development & test, use the byebug debugger and sqlite3 database
 group :development, :test do
   gem 'byebug'
@@ -33,13 +36,15 @@ group :production do
   gem 'pg'
 end
 
-# On test, use Cucumber and Capybara and related tools
+# On test, use Cucumber, Capybara, RSpec and related tools
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'  # some pre-fabbed step definitions
   gem 'database_cleaner'  # to clear Cucumber's test database between runs
   gem 'capybara'  # lets Cucumber pretend to be a web browser
   gem 'launchy'  # a useful debugging aid for user stories
+  gem 'rspec-rails'
+  gem 'autotest-rails'
 end
 
 # Use jquery as the JavaScript library
