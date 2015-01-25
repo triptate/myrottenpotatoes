@@ -44,6 +44,7 @@ group :test do
   gem 'capybara'  # lets Cucumber pretend to be a web browser
   gem 'launchy'  # a useful debugging aid for user stories
   gem 'rspec-rails'
+  gem 'rspec-activemodel-mocks'  # for using the mock_model methods in tests
   gem 'autotest-rails'
 end
 
