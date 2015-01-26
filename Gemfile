@@ -45,7 +45,9 @@ group :test do
   gem 'launchy'  # a useful debugging aid for user stories
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'  # for using the mock_model methods in tests
+  gem 'rspec-its'  # for using the its methods in tests
   gem 'autotest-rails'
+  gem 'factory_girl_rails'  # for creating factories instead of fixtures
 end
 
 # Use jquery as the JavaScript library

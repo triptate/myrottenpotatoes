@@ -23,6 +23,10 @@ class Movie < ActiveRecord::Base
   	release_date && release_date < @@grandfathered_date
   end
 
+  def name_with_rating
+    title + ' (' + rating + ')'
+  end
+
   scope :with_good_reviews, lambda { |threshold|
     Movie.joins(:reviews).group(:movie_id).having(['AVG(reviews.potatoes) > ?', threshold.to_i])
   }
