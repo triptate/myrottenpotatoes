@@ -6,6 +6,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'rspec/active_model/mocks'
 require 'rspec/its'
+require 'rspec/expectations'
 require 'factory_girl_rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
