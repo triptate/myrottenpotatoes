@@ -44,7 +44,12 @@ end
 # are rows in the movies database.
 
 Then /I should see all the movies/ do
-  assert all('#movies tbody tr').count == Movie.all.count
+  expect(all('#movies tbody tr').count).to eq(Movie.all.count)
+end
+
+Then /the director of "(.*)" should be "(.*)"/ do |movie_title, director|
+  movie = Movie.find_by_title movie_title
+  expect(movie.director).to eq(director)
 end
 
 # helper methods below

@@ -6,7 +6,9 @@
 module NavigationHelpers
   # Maps a name to a path. Used by the
   #
-  #   When /^I go to (.+)$/ do |page_name|
+  #   When  /^I go to (.+)$/ do |page_name|
+  #   and
+  #   Given /^I am on (.+)$/ do |page_name|
   #
   # step definition in web_steps.rb
   #
@@ -14,11 +16,18 @@ module NavigationHelpers
     case page_name
 
     when /^the home\s?page$/
-      '/'
-    when /^the RottenPotatoes home page/
-      '/movies'
-    when /^the Create New Movie page/
-      '/movies/new'
+      movies_path
+
+    when /^the RottenPotatoes home page$/
+      movies_path
+
+    when /^the Create New Movie page$/
+      new_movie_path
+
+    when /^the (edit|details) page for "(.*)"$/
+      movie = Movie.find_by_title $2
+      return edit_movie_path movie if $1 == 'edit'
+      return movie_path movie if $1 == 'details'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
