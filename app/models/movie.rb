@@ -53,6 +53,6 @@ class Movie < ActiveRecord::Base
     Movie.joins(:reviews).where(['reviews.created_at >= ?', n.days.ago]).uniq
   }
 
-  attr_accessible :title, :rating, :description, :release_date
+  attr_accessible :title, :director, :rating, :description, :release_date
 
 end
