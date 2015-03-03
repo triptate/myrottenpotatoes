@@ -29,6 +29,14 @@ class Movie < ActiveRecord::Base
 
   class Movie::InvalidKeyError < StandardError ; end
 
+  def self.search(search)
+    if search
+      Movie.where('title LIKE ?', "%#{search[:keywords]}%")
+    else
+      scoped
+    end
+  end
+
   def self.find_in_tmdb(string)
     begin
       Tmdb::Movie.find(string)

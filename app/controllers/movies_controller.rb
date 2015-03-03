@@ -2,31 +2,18 @@
 
 class MoviesController < ApplicationController
 
+  helper_method :sort_column, :sort_direction
   def index
-    @all_ratings = Movie.all_ratings  # just to make data accessible to view
-    all_ratings_hash = Hash[@all_ratings.map {|rating| [rating, rating]}]
-    needs_redirect = false
+    @all_ratings = Movie.all_ratings  # just to make data accessible to views
+    @movies = Movie.search(params).order(sort_column + " " + sort_direction)
+  end
 
-    # if a new filter is added, use it and update the session; otherwise, use the session or the default
-    if params[:filter]
-      @filter = session[:filter] = params[:filter]
-    else
-      @filter = session[:filter] ? session[:filter] : all_ratings_hash
-      needs_redirect = true
-    end
+  def sort_column
+    Movie.column_names.include?(params[:sort]) ? params[:sort] : "title"
+  end
 
-    # if a new sort is added, use it and update the session; otherwise, use the session or the default
-    if params[:sort]
-      @sort = session[:sort] = params[:sort]
-    else
-      @sort = session[:sort] ? session[:sort] : :title
-      needs_redirect = true
-    end
-
-    @sort = @sort.to_sym  # params and session will convert the sort to a string, causing CSS issues
-    flash.keep
-    redirect_to movies_path({:filter => @filter, :sort => @sort}) if needs_redirect
-    @movies = Movie.where(rating: @filter.keys).order(@sort)
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
   def movies_with_filters

@@ -81,8 +81,16 @@ table#movies tr:hover {
   background-color: yellow;
 }
 
-table#movies th.hilite {
+table#movies th .current {
   background-color: yellow;
+}
+
+table#movies th .asc {
+  background-image: url(/images/);
+}
+
+table#movies th .desc {
+  background-image: url(/images/);
 }
 
 table#movies th, table#movies td {

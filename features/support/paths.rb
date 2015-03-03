@@ -24,10 +24,12 @@ module NavigationHelpers
     when /^the Create New Movie page$/
       new_movie_path
 
-    when /^the (edit|details) page for "(.*)"$/
+    when /^the (edit|details|Similar Movies) page for "(.*)"$/
       movie = Movie.find_by_title $2
       return edit_movie_path movie if $1 == 'edit'
       return movie_path movie if $1 == 'details'
+      return movies_path if $1 == 'Similar Movies'
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
