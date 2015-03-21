@@ -20,10 +20,14 @@ Background: movies have been added to database
 
   And I am on the RottenPotatoes home page
 
-Scenario: sort movies alphabetically
-  When I follow "Movie Title"
+Scenario: page automatically sorts movies alphabetically
   Then I should see "Aladdin" before "Amelie"
   And  I should see "Chicken Run" before "The Terminator"
+
+Scenario: page sorts movies in reverse alphabetical order
+  When I follow "Title"
+  Then I should see "When Harry Met Sally" before "Raiders of the Lost Ark"
+  And  I should see "Chocolat" before "Chicken Run"
 
 Scenario: sort movies in increasing order of release date
   When I follow "Release Date"

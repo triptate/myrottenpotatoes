@@ -31,7 +31,8 @@ class Movie < ActiveRecord::Base
 
   def self.search(search)
     if search
-      Movie.where('title LIKE ?', "%#{search[:keywords]}%")
+      ratings = search[:rating] ? search[:rating] : all_ratings
+      Movie.where(rating: ratings).where("title LIKE ?", "%#{search[:keywords]}%")
     else
       scoped
     end

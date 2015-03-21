@@ -20,7 +20,7 @@ end
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   convert_to_array(rating_list).each do |rating|
     steps %Q{
-      When I #{uncheck}check "filter[#{rating}]"
+      When I #{uncheck}check "rating[#{rating}]"
     }
   end
 end
