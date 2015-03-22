@@ -48,6 +48,7 @@ group :test do
   gem 'rspec-its'  # for using the its methods in tests
   gem 'autotest-rails'
   gem 'factory_girl_rails'  # for creating factories instead of fixtures
+  gem 'simplecov'
 end
 
 # Use jquery as the JavaScript library

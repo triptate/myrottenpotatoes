@@ -6,6 +6,13 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_current_user
 
+  before_filter :set_config
+  Tmdb::Api.key("e44bf5bd2b7762030e6a298a22d086e7")
+
+  def set_config
+	@configuration = Tmdb::Configuration.new
+  end
+
   protected # prevents following method from being invoked by a route
   
   def set_current_user
