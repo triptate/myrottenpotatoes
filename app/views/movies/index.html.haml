@@ -6,8 +6,13 @@
   - @all_ratings.each do |rating|
     = rating
     = check_box_tag "rating[]", rating, (params[:rating].include?(rating) if params[:rating]), :id => "rating[#{rating}]"
-  = text_field_tag :keywords, params[:keywords]
-  = submit_tag 'Refresh', :name => nil
+  %p
+    = label_tag :director, "Search Director"
+    = text_field_tag :director, params[:director]
+  %p
+    = label_tag :keywords, "Search Title"
+    = text_field_tag :keywords, params[:keywords]
+  %p= submit_tag 'Search', :name => nil
 
 %table#movies
   %thead

@@ -4,6 +4,10 @@ class MoviesController < ApplicationController
 
   helper_method :sort_column, :sort_direction
   def index
+    if params[:flash_warning]
+      flash[:warning] = params[:flash_warning]
+      redirect_to movies_path
+    end
     @all_ratings = Movie.all_ratings  # just to make data accessible to views
     @movies = Movie.search(params).order(sort_column + " " + sort_direction)
   end

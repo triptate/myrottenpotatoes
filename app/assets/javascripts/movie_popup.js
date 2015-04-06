@@ -34,4 +34,5 @@ var MoviePopup = {
 
 };
 
-$(MoviePopup.setup);
+$(MoviePopup.setup);                            // Javascript won't run on initial page load without this
+$(document).on('page:load', MoviePopup.setup);  // Javascript won't run on new page loads because of Turbolinks without this

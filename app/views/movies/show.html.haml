@@ -20,6 +20,7 @@
 |
 = link_to ' Delete', movie_path(@movie), :method => :delete 
 |
-= link_to ' Find movies with same director', movies_path 
+- director_search = (@movie.director and @movie.director.length > 0) ? {:director => @movie.director} : {:flash_warning => "'#{@movie.title}' has no director info"}
+= link_to ' Find movies with same director', movies_path(director_search)
 |
 = link_to ' Back to movie list', movies_path

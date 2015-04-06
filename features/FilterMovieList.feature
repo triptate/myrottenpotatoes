@@ -23,11 +23,11 @@ Background: movies have been added to database
 Scenario: restrict to movies with 'PG' or 'R' ratings
   When I check the following ratings: PG, R
   And  I uncheck the following ratings: G, PG-13, NC-17
-  And  I press "Refresh"
+  And  I press "Search"
   Then I should see movies rated: PG, R
   And  I should not see movies rated: G, PG-13, NC-17
 
 Scenario: all ratings selected
   When I check the following ratings: G, PG, PG-13, R, NC-17
-  And  I press "Refresh"
+  And  I press "Search"
   Then I should see all the movies

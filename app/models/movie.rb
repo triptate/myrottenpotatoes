@@ -1,16 +1,28 @@
 class Movie < ActiveRecord::Base
 
+  def self.all_ratings; %w[G PG PG-13 R NC-17]; end # shortcut for an array of strings
+
   has_many :reviews
   has_many :moviegoers, :through => :reviews
 
-  def self.all_ratings; %w[G PG PG-13 R NC-17]; end # shortcut for an array of strings
-
+  attr_accessible :title, :director, :rating, :description, :release_date
+  
   validates :title, :presence => true
   validates :release_date, :presence => true
   validate :released_1930_or_later # uses custom validator below
   validates :rating, :inclusion => {:in => Movie.all_ratings}, :unless => :grandfathered?
   validates :rating, :absence => { :message => 'must be empty if movie predates rating system'},
   	:if => :grandfathered?
+
+  scope :with_good_reviews, lambda { |threshold|
+    Movie.joins(:reviews).group(:movie_id).having(['AVG(reviews.potatoes) > ?', threshold.to_i])
+  }
+  scope :for_kids, lambda {
+    Movie.where('rating in (?)', %w(G PG))
+  }
+  scope :recently_reviewed, lambda { |n|
+    Movie.joins(:reviews).where(['reviews.created_at >= ?', n.days.ago]).uniq
+  }
 
   def released_1930_or_later
   	if release_date && release_date < Date.parse('1 Jan 1930')
@@ -29,15 +41,6 @@ class Movie < ActiveRecord::Base
 
   class Movie::InvalidKeyError < StandardError ; end
 
-  def self.search(search)
-    if search
-      ratings = search[:rating] ? search[:rating] : all_ratings
-      Movie.where(rating: ratings).where("title LIKE ?", "%#{search[:keywords]}%")
-    else
-      scoped
-    end
-  end
-
   def self.find_in_tmdb(string)
     begin
       Tmdb::Movie.find(string)
@@ -50,18 +53,29 @@ class Movie < ActiveRecord::Base
     end
   end
 
-  scope :with_good_reviews, lambda { |threshold|
-    Movie.joins(:reviews).group(:movie_id).having(['AVG(reviews.potatoes) > ?', threshold.to_i])
-  }
+  def self.search(search)
+    if search
+      Movie.rating_search(search).keyword_search(search).director_search(search)
+    else
+      scoped
+    end
+  end
 
-  scope :for_kids, lambda {
-    Movie.where('rating in (?)', %w(G PG))
-  }
+  def self.rating_search(search)
+      ratings = search[:rating] ? search[:rating] : all_ratings
+      search_results = Movie.where(:rating => ratings)
+  end
 
-  scope :recently_reviewed, lambda { |n|
-    Movie.joins(:reviews).where(['reviews.created_at >= ?', n.days.ago]).uniq
-  }
+  def self.keyword_search(search)
+    Movie.where("title LIKE ?", "%#{search[:keywords]}%")
+  end
 
-  attr_accessible :title, :director, :rating, :description, :release_date
+  def self.director_search(search)
+    if search[:director] and search[:director].length > 0
+      Movie.where("director LIKE ?", "%#{search[:director]}%")
+    else
+      Movie.all
+    end
+  end
 
 end

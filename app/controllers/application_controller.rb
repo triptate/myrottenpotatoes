@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   Tmdb::Api.key("e44bf5bd2b7762030e6a298a22d086e7")
 
   def set_config
-	@configuration = Tmdb::Configuration.new
+    @configuration = Tmdb::Configuration.new
   end
 
   protected # prevents following method from being invoked by a route
