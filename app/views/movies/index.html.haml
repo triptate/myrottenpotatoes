@@ -3,18 +3,20 @@
 = form_tag movies_path, :method => :get, :id => "movie_search" do
   = hidden_field_tag :direction, params[:direction]
   = hidden_field_tag :sort, params[:sort]
-  %p
-  - @all_ratings.each do |rating|
-    = rating
-    = check_box_tag "rating[]", rating, (params[:rating].include?(rating) if params[:rating]), :id => "rating[#{rating}]"
+  %p#rating_search
+    = label_tag "rating[]", "Filter by Rating"
+    - @all_ratings.each do |rating|
+      = rating
+      = check_box_tag "rating[]", rating, (params[:rating].include?(rating) if params[:rating]), :id => "rating[#{rating}]"
   %p
     = label_tag :director, "Search Director"
     = text_field_tag :director, params[:director]
   %p
     = label_tag :keywords, "Search Title"
     = text_field_tag :keywords, params[:keywords]
-  %p= submit_tag 'Search', :name => nil
-= link_to 'Clear search', movies_path
+  %p
+    = submit_tag 'Search', :name => nil
+    = link_to 'Clear search', movies_path
 
 %table#movies
   %thead

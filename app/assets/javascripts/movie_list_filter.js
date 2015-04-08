@@ -11,9 +11,9 @@ var MovieListFilter = {
   
   setup: function() {
     // construct checkbox with label
-    var labelAndCheckbox = $('<label for="filter">Only movies suitable for children</label>' + 
-                             '<input type="checkbox" id="filter" />' );
-    labelAndCheckbox.insertBefore('#movie_search');
+    var labelAndCheckbox = $('<label for="filter">Parental Filter</label>Show only movies suitable for children' +
+                              '<input id="filter" name="filter" type="checkbox" />' );
+    labelAndCheckbox.insertBefore('#rating_search');
     $('#filter').change(MovieListFilter.filter_adult);
   }
 
