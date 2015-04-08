@@ -14,16 +14,6 @@ class Movie < ActiveRecord::Base
   validates :rating, :absence => { :message => 'must be empty if movie predates rating system'},
   	:if => :grandfathered?
 
-  scope :with_good_reviews, lambda { |threshold|
-    Movie.joins(:reviews).group(:movie_id).having(['AVG(reviews.potatoes) > ?', threshold.to_i])
-  }
-  scope :for_kids, lambda {
-    Movie.where('rating in (?)', %w(G PG))
-  }
-  scope :recently_reviewed, lambda { |n|
-    Movie.joins(:reviews).where(['reviews.created_at >= ?', n.days.ago]).uniq
-  }
-
   def released_1930_or_later
   	if release_date && release_date < Date.parse('1 Jan 1930')
   	  errors.add(:release_date, 'must be 1930 or later')
@@ -53,29 +43,36 @@ class Movie < ActiveRecord::Base
     end
   end
 
-  def self.search(search)
-    if search
-      Movie.rating_search(search).keyword_search(search).director_search(search)
+  scope :search, lambda { |search|
+    if search.present?
+      rating_search(search).keyword_search(search).director_search(search)
     else
       scoped
     end
-  end
-
-  def self.rating_search(search)
-      ratings = search[:rating] ? search[:rating] : all_ratings
-      search_results = Movie.where(:rating => ratings)
-  end
-
-  def self.keyword_search(search)
-    Movie.where("title LIKE ?", "%#{search[:keywords]}%")
-  end
-
-  def self.director_search(search)
-    if search[:director] and search[:director].length > 0
-      Movie.where("director LIKE ?", "%#{search[:director]}%")
+  }
+  scope :rating_search, lambda { |search|
+    ratings = search[:rating] ? search[:rating] : all_ratings
+    where(:rating => ratings)
+  }
+  scope :keyword_search, lambda { |search|
+    where("title LIKE ?", "%#{search[:keywords]}%")
+  }
+  scope :director_search, lambda { |search|
+    if search[:director].present?
+      where("director LIKE ?", "%#{search[:director]}%")
     else
-      Movie.all
+      all
     end
-  end
+  }
+  scope :with_good_reviews, lambda { |threshold|
+    Movie.joins(:reviews).group(:movie_id).having(['AVG(reviews.potatoes) > ?', threshold.to_i])
+  }
+  scope :for_kids, lambda {
+    Movie.where('rating in (?)', %w(G PG))
+  }
+  scope :recently_reviewed, lambda { |n|
+    Movie.joins(:reviews).where(['reviews.created_at >= ?', n.days.ago]).uniq
+  }
+
 
 end
