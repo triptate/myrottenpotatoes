@@ -13,10 +13,11 @@ var MovieListFilter = {
     // construct checkbox with label
     var labelAndCheckbox = $('<label for="filter">Only movies suitable for children</label>' + 
                              '<input type="checkbox" id="filter" />' );
-    labelAndCheckbox.insertBefore('#movies');
+    labelAndCheckbox.insertBefore('#movie_search');
     $('#filter').change(MovieListFilter.filter_adult);
   }
 
 };
 
-$(MovieListFilter.setup); // run setup function when document ready
+$(MovieListFilter.setup);                             // Javascript won't run on initial page load without this
+$(document).on('page:load', MovieListFilter.setup);   // Javascript won't run on new page loads because of Turbolinks without this
